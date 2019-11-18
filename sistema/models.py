@@ -12,7 +12,7 @@ class Materia(models.Model):
 class Grado(models.Model):
     nombre = models.CharField(max_length=60)
     seccion = models.CharField(max_length=60)
-    materias   = models.ManyToManyField(Asignacion, through='Asignacion')
+    materias = models.ManyToManyField(Materia, through='Asignacion')
     def __str__(self):
         return self.nombre
 
@@ -21,14 +21,13 @@ class Asignacion (models.Model):
     materia = models.ForeignKey(Materia, on_delete=models.CASCADE)
 
 class AsignacionInLine(admin.TabularInline):
-    model = Actuacion
+    model = Asignacion
     extra = 1
 
 
 class MateriaAdmin(admin.ModelAdmin):
-    inlines = (AsignacionInLine)
+    inlines = (AsignacionInLine,)
 
 
 class GradoAdmin (admin.ModelAdmin):
-
-    inlines = (AsignacionInLine)
+    inlines = (AsignacionInLine,)
